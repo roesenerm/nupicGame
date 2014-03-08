@@ -3,6 +3,8 @@ nupicGame
 
 A simple video game that predicts game events.
 
+import pygame
+
 The code modifies the cpu prediciton example and instead takes game events as inputs.
 
 Current game events: up, down, left, right. 
