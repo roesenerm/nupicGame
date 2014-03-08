@@ -20,7 +20,7 @@
 # http://numenta.org/licenses/
 # ----------------------------------------------------------------------
 
-"""A simple client to read Game usage and predict it in real time."""
+"""A simple client to read Game Event usage and predict it in real time."""
 
 from collections import deque
 import time
@@ -45,12 +45,12 @@ WINDOW = 60
 plt.ion()
 fig = plt.figure()
 # plot title, legend, etc
-plt.title('Game prediction example')
+plt.title('Game Event prediction')
 plt.xlabel('time [s]')
-plt.ylabel('Game usage [%]')
+plt.ylabel('Event')
 
-def runCPU():
-  """Poll Game Event, make predictions, and plot the results. Runs forever."""
+def runEvent():
+  """Poll Event, make predictions, and plot the results. Runs forever."""
   # Create the model for predicting Game usage.
   model = ModelFactory.create(model_params.MODEL_PARAMS)
   model.enableInference({'predictedField': 'event'})
@@ -136,7 +136,7 @@ def runCPU():
                 pygame.display.update()
                 fpsTime.tick(fps)
                 event = nValue
-                print "event ", event
+                print "event: ", event
                 
                 # Run the input through the model and shift the resulting prediction.
                 modelInput = {'event': event}
@@ -144,7 +144,7 @@ def runCPU():
                 
                 # Update the trailing predicted and actual value deques.
                 inference = result.inferences['multiStepBestPredictions'][5]
-                print 'inference ', inference
+                print 'inference: ', inference
                 if inference is not None:
                     actHistory.append(result.rawInput['event'])
                     predHistory.append(inference)
@@ -187,4 +187,4 @@ def runCPU():
         #pass
 
 if __name__ == "__main__":
-  runCPU()
+  runEvent()
